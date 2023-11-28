@@ -126,20 +126,20 @@ void printBinary(int a){
     cout<<endl;
 }
 
+void func(){
+
+}
 int main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    long long n; cin>>n;
-    cout<<n<<" ";
-    while(n!=1){
-        if(n&1){
-            n = (n*3)+1;
-        }
-        else{
-            n/=2;
-        }
-        cout<<n<<" ";
+    ll n;cin>>n;
+    ll sum = (n*(n+1)/2);
+    ll sum2 = 0;
+    for(int i=1;i<n;i++){
+        ll k;cin>>k;
+        sum2+=k;
     }
+    cout<<(sum-sum2)<<endl;
     return 0;
 }
