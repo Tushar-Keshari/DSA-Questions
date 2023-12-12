@@ -91,56 +91,72 @@ const int MOD = 1000000007;
 
 //LCM(a,b)=a*b/__gcd(a,b);
 
-vector<vector<int>> subset(vector<int> nums){
-    int n = nums.size();
-    int subset = (1<<n);
-    vector<vector<int>> result;
-    for(int mask = 0 ; mask < subset ; mask++){
-        vector<int> subsets;
-        for(int j = 0 ; j < n ; j++){
-            if((mask  & (1<< j)) != 0){
-                subsets.push_back(nums[j]);
-            }
-        }
-        result.push_back(subsets);
+// vector<vector<int>> subset(vector<int> nums){
+//     int n = nums.size();
+//     int subset = (1<<n);
+//     vector<vector<int>> result;
+//     for(int mask = 0 ; mask < subset ; mask++){
+//         vector<int> subsets;
+//         for(int j = 0 ; j < n ; j++){
+//             if((mask  & (1<< j)) != 0){
+//                 subsets.push_back(nums[j]);
+//             }
+//         }
+//         result.push_back(subsets);
+//     }
+//     return result;
+// }
+// int expo_power(int a , int b){
+//     //base case 
+//     if(b == 1) return a;
+
+//     int result = 1;
+//     if(b & 1) // odd
+//     result = a * expo_power(a,b/2) * expo_power(a,b/2);
+//     else 
+//     result = expo_power(a,b/2) * expo_power(a , b/2); 
+
+//     return result;
+
+// }
+// void printBinary(int a){
+//     for(int i=10 ; i>=0 ; i--){
+//         cout<< ((a >> i) & 1);
+//     }
+//     cout<<endl;
+// }
+
+bool isChecker(vector<ll> v,ll mid,ll k){
+    ll sum=0;
+    for(auto i:v){
+        sum+=mid/i;
+        if(sum>=k) return true;
     }
-    return result;
-}
-int expo_power(int a , int b){
-    //base case 
-    if(b == 1) return a;
-
-    int result = 1;
-    if(b & 1) // odd
-    result = a * expo_power(a,b/2) * expo_power(a,b/2);
-    else 
-    result = expo_power(a,b/2) * expo_power(a , b/2); 
-
-    return result;
-
-
-}
-
-void printBinary(int a){
-    for(int i=10 ; i>=0 ; i--){
-        cout<< ((a >> i) & 1);
-    }
-    cout<<endl;
+    return sum>=k;
 }
 void func(){
-
+    ll n,k;cin>>n>>k;
+    ll maxi=0;
+    vector<ll> v(n);
+    rep(i,0,n) cin>>v[i];
+    ll l = 1,r = 1e18;
+    ll mid, ans=0;
+    while(l<=r){
+        mid = (l+r)/2;
+        if(isChecker(v,mid,k)){
+            ans = mid;
+            r = mid-1;
+        }
+        else{
+            l = mid+1;
+        }
+    }
+    cout<<ans<<endl;
 }
 int main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    ll n;cin>>n;
-    ll sum = (n*(n+1)/2);
-    ll sum2 = 0;
-    for(int i=1;i<n;i++){
-        ll k;cin>>k;
-        sum2+=k;
-    }
-    cout<<(sum-sum2)<<endl;
+    func();
     return 0;
 }

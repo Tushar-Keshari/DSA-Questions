@@ -118,29 +118,52 @@ int expo_power(int a , int b){
 
     return result;
 
-
 }
-
 void printBinary(int a){
     for(int i=10 ; i>=0 ; i--){
         cout<< ((a >> i) & 1);
     }
     cout<<endl;
 }
+bool isChecker(vector<ll> v,ll mid,ll k){
+    ll sum = 0;
+    ll cnt = 1;
+    for(ll i=0;i<v.size();i++){
+        if(v[i]>mid) return false;
+        if(sum+v[i]>mid){
+            cnt++;
+            sum=v[i];
+        }
+        else{
+            sum+=v[i];
+        }
+    }
+    return cnt<=k;
+}
 void func(){
+    ll n,k;cin>>n>>k;
+    vector<ll> v(n);
+    rep(i,0,n) cin>>v[i];
 
+    ll l=1,r=1e18;
+    ll mid;
+    ll ans = 1e18;
+    while(l<=r){
+        mid=(l+r)/2;
+        if(isChecker(v,mid,k)){
+            ans=mid;
+            r=mid-1;
+        }
+        else{
+            l=mid+1;
+        }
+    }
+    cout<<ans<<endl;
 }
 int main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    ll n;cin>>n;
-    ll sum = (n*(n+1)/2);
-    ll sum2 = 0;
-    for(int i=1;i<n;i++){
-        ll k;cin>>k;
-        sum2+=k;
-    }
-    cout<<(sum-sum2)<<endl;
+    func();
     return 0;
 }
