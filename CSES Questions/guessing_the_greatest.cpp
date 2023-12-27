@@ -125,57 +125,53 @@ void printBinary(int a){
     }
     cout<<endl;
 }
+ll ask(ll l,ll r){
+    if(l>=r) return -1;
+    
+    cout<<"? "<<l+1<<" "<<r+1<<endl;
+    cout.flush();
 
-void func(){
-    ll n,m ;
-    cin>>n>>m;
-    cout<<max(n,m)<<endl;
+    ll x;cin>>x;
+    return x-1;
 }
-void func2(){
+void func(){
     ll n;cin>>n;
-    map<ll,ll> indegree;
-    for(int i=0;i<n-1;i++){
-        int a,b;
-        cin>>a>>b;
-        indegree[a-1]++;
-        indegree[b-1]++;
-    }
-    ll cnt=0;
-    for(int i=0;i<n;i++){
-        if(indegree[i]==1){
-            cnt++;
+    ll l=0,r=n,mid,ans=0;
+    while(l<r-1){
+        mid=(l+r)/2;
+
+        ll max1=ask(l,r-1);
+
+        if(max1 < mid){
+            if(max1 == ask(l,mid-1)){
+                r=mid;
+                // ans=mid;
+            }
+            else{
+                l=mid;
+            }
+        }
+        else{
+            if(max1 == ask(mid,r-1)){
+                l=mid;
+                // ans=mid;
+            }
+            else{
+                r=mid;
+            }
         }
     }
-    cout<<ceil((cnt-1)/2)+1<<endl;
 
-}
-void func3(){
-    ll n;cin>>n;
-    string s, sub;cin>>s;
-    char cur = 'a';
-    ll cnt = 0, cost, pos=0;
-    for(ll i=n-1;i>=0;i--)
-        if(s[i]>=cur) cnt++, sub+=s[i], cur = s[i], s[i]='#';
-
-        cost = cnt - count(sub.begin(),sub.end(),sub.back());
-        // cout<<sub.back()<<" "<<count(sub.begin(),sub.end(),sub.back())<<endl;
-    
-    // cout<<s<<endl;
-
-    for(int i=0;i<n;i++){
-        if(s[i]=='#') s[i] = sub[pos++];
-    }
-
-    cout<<(is_sorted(s.begin(),s.end()) ? cost : -1 )<<'\n';
-
+    cout<<"! "<<l+1<<endl;
+    cout.flush();
 }
 int main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    int t;cin>>t;
-    while(t--){
-        func3();
-    }
+    // int t=1;cin>>t;
+    // while(t--){
+        func();
+    // }
     return 0;
 }

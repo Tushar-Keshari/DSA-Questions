@@ -127,55 +127,20 @@ void printBinary(int a){
 }
 
 void func(){
-    ll n,m ;
-    cin>>n>>m;
-    cout<<max(n,m)<<endl;
-}
-void func2(){
-    ll n;cin>>n;
-    map<ll,ll> indegree;
-    for(int i=0;i<n-1;i++){
-        int a,b;
-        cin>>a>>b;
-        indegree[a-1]++;
-        indegree[b-1]++;
+    int i=0;
+    int a[19] = {2,3,5,7,11,13,17,19,23,29,31,37,41,43,47,4,9,25,49},k=0;
+    string s;
+    while(i<19){
+        cout<<a[i++]<<endl;
+        cin>>s;
+        if(s=="yes")k++;
     }
-    ll cnt=0;
-    for(int i=0;i<n;i++){
-        if(indegree[i]==1){
-            cnt++;
-        }
-    }
-    cout<<ceil((cnt-1)/2)+1<<endl;
-
-}
-void func3(){
-    ll n;cin>>n;
-    string s, sub;cin>>s;
-    char cur = 'a';
-    ll cnt = 0, cost, pos=0;
-    for(ll i=n-1;i>=0;i--)
-        if(s[i]>=cur) cnt++, sub+=s[i], cur = s[i], s[i]='#';
-
-        cost = cnt - count(sub.begin(),sub.end(),sub.back());
-        // cout<<sub.back()<<" "<<count(sub.begin(),sub.end(),sub.back())<<endl;
-    
-    // cout<<s<<endl;
-
-    for(int i=0;i<n;i++){
-        if(s[i]=='#') s[i] = sub[pos++];
-    }
-
-    cout<<(is_sorted(s.begin(),s.end()) ? cost : -1 )<<'\n';
-
+    cout<<(k<2 ? "prime" : "composite")<<endl;
 }
 int main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    int t;cin>>t;
-    while(t--){
-        func3();
-    }
+    func();
     return 0;
 }

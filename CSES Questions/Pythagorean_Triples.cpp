@@ -12,7 +12,7 @@
 #include<string>
 using namespace std;
 
-#define ll long long int 
+#define int long long int 
 #define ld long double
 #define line "\n"
 
@@ -126,56 +126,31 @@ void printBinary(int a){
     cout<<endl;
 }
 
-void func(){
-    ll n,m ;
-    cin>>n>>m;
-    cout<<max(n,m)<<endl;
-}
-void func2(){
-    ll n;cin>>n;
-    map<ll,ll> indegree;
-    for(int i=0;i<n-1;i++){
-        int a,b;
-        cin>>a>>b;
-        indegree[a-1]++;
-        indegree[b-1]++;
-    }
-    ll cnt=0;
-    for(int i=0;i<n;i++){
-        if(indegree[i]==1){
-            cnt++;
+vector<int> v;
+void countTriplet(){
+    int m = 1e5;
+    v.push_back(0);
+    for(int a=3;a<m;a+=2){
+        int A = a*a;
+        int b = A/2, c=A/2 +1;
+        if(A == b+c && b*b*1LL + a*a*1LL == c*c*1LL){
+            v.push_back(c);
         }
     }
-    cout<<ceil((cnt-1)/2)+1<<endl;
-
 }
-void func3(){
-    ll n;cin>>n;
-    string s, sub;cin>>s;
-    char cur = 'a';
-    ll cnt = 0, cost, pos=0;
-    for(ll i=n-1;i>=0;i--)
-        if(s[i]>=cur) cnt++, sub+=s[i], cur = s[i], s[i]='#';
-
-        cost = cnt - count(sub.begin(),sub.end(),sub.back());
-        // cout<<sub.back()<<" "<<count(sub.begin(),sub.end(),sub.back())<<endl;
-    
-    // cout<<s<<endl;
-
-    for(int i=0;i<n;i++){
-        if(s[i]=='#') s[i] = sub[pos++];
-    }
-
-    cout<<(is_sorted(s.begin(),s.end()) ? cost : -1 )<<'\n';
-
+void func(){
+    int n;cin>>n;
+    auto cnt = upper_bound(v.begin(),v.end(),n) - v.begin();
+    cout<<cnt-1<<endl;
 }
-int main(){
+int32_t main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
     int t;cin>>t;
+    countTriplet();
     while(t--){
-        func3();
+        func();
     }
     return 0;
 }

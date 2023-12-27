@@ -126,56 +126,116 @@ void printBinary(int a){
     cout<<endl;
 }
 
-void func(){
-    ll n,m ;
-    cin>>n>>m;
-    cout<<max(n,m)<<endl;
-}
-void func2(){
+void func23(){
     ll n;cin>>n;
-    map<ll,ll> indegree;
-    for(int i=0;i<n-1;i++){
-        int a,b;
-        cin>>a>>b;
-        indegree[a-1]++;
-        indegree[b-1]++;
-    }
-    ll cnt=0;
+    string s;cin>>s;
+    vector<int> v(27,0);
     for(int i=0;i<n;i++){
-        if(indegree[i]==1){
-            cnt++;
+        v[s[i]-'A'+1]++;
+    }
+    ll flag=0;
+    for(int i=1;i<27;i++){
+        if(v[i] >= i){
+            flag++;
         }
     }
-    cout<<ceil((cnt-1)/2)+1<<endl;
+    cout<<flag<<endl;
+}
+void print(vector<ll> v){
+    for(auto i : v){
+        cout<<i<<" ";
+    }
+    cout<<endl;
+}
+void func2(){
+    ll n,k;cin>>n>>k;
+    vector<ll> v(n);
+    for(int i=0;i<n;i++) v[i]=i+1;
 
+    if(n-1 == k) {
+        print(v);
+    }
+    else if(k == 0){
+        reverse(v.begin(),v.end());
+        print(v);
+    }
+    else{
+        vector<ll> ans;
+        ll left = n-k;
+        while(k--){
+            ans.push_back(n--);
+        }
+        ll key =1;
+        while(left--){
+            ans.push_back(key++);
+        }
+
+        reverse(ans.begin(),ans.end());
+        print(ans);
+    }
+    return;
 }
 void func3(){
-    ll n;cin>>n;
-    string s, sub;cin>>s;
-    char cur = 'a';
-    ll cnt = 0, cost, pos=0;
-    for(ll i=n-1;i>=0;i--)
-        if(s[i]>=cur) cnt++, sub+=s[i], cur = s[i], s[i]='#';
+    ll n,k;cin>>n>>k;
+    vector<ll> a(n), b(n);
+    for(int i=0;i<n;i++) cin>>a[i];
+    for(int i=0;i<n;i++) cin>>b[i];
 
-        cost = cnt - count(sub.begin(),sub.end(),sub.back());
-        // cout<<sub.back()<<" "<<count(sub.begin(),sub.end(),sub.back())<<endl;
-    
-    // cout<<s<<endl;
+    ll sum=0;   
+}
 
+void func4(){
+    int n;cin>>n;
+    vector<pair<int,int>> a(n),b(n),c(n);
     for(int i=0;i<n;i++){
-        if(s[i]=='#') s[i] = sub[pos++];
+        cin>>a[i].first;
+        a[i].second = i+1;
+    }
+    for(int i=0;i<n;i++){
+        cin>>b[i].first;
+        b[i].second = i+1;
+    }
+    for(int i=0;i<n;i++){
+        cin>>c[i].first;
+        c[i].second = i+1;
+    }
+    sort(a.rbegin(),a.rend());
+    sort(b.rbegin(),b.rend());
+    sort(c.rbegin(),c.rend());
+
+    int ans = 0;
+    for(int x=0;x<3;x++){
+        for(int y=0;y<3;y++){
+            for(int z=0;z<3;z++){
+                if(a[x].second != b[y].second && b[y].second != c[z].second && c[z].second != a[x].second){
+                    ans = max(ans,a[x].first + b[y].first + c[z].first);
+                }
+            }
+        }
     }
 
-    cout<<(is_sorted(s.begin(),s.end()) ? cost : -1 )<<'\n';
-
+    cout<<ans<<endl;
+}
+void func(){
+    ll n,m,a;cin>>n>>m>>a;
+    ll ans=0;
+    ans+=(n+a-1)/a;
+    ll x=(n+a-1)/a;
+    m-=a;
+    ans+=((m+a-1)/a)*x;
+    cout<<ans<<endl;
 }
 int main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    int t;cin>>t;
-    while(t--){
-        func3();
-    }
+    // int t;cin>>t;
+    // while(t--){
+    //     // func();
+    //     // func2();
+    //     // func3();
+    //     func4();
+    // }
+    func();
     return 0;
 }

@@ -125,57 +125,68 @@ void printBinary(int a){
     }
     cout<<endl;
 }
+void func1(){
+    string ab; cin>>ab;
+    int n = ab.size();
+    for(int i=1;i<n;i++){
+        string s1 = ab.substr(0,i);
+        string s2 = ab.substr(i,n-i);
 
-void func(){
-    ll n,m ;
-    cin>>n>>m;
-    cout<<max(n,m)<<endl;
-}
-void func2(){
-    ll n;cin>>n;
-    map<ll,ll> indegree;
-    for(int i=0;i<n-1;i++){
-        int a,b;
-        cin>>a>>b;
-        indegree[a-1]++;
-        indegree[b-1]++;
-    }
-    ll cnt=0;
-    for(int i=0;i<n;i++){
-        if(indegree[i]==1){
-            cnt++;
+        int num1 = stoi(s1);
+        int num2 = stoi(s2);
+
+        if(num1 < num2 && s1+s2==ab && s1[0]!='0' && s2[0]!='0'){
+            cout<<s1<<" "<<s2<<endl;
+            return;
         }
     }
-    cout<<ceil((cnt-1)/2)+1<<endl;
-
+    cout<<-1<<endl;
 }
-void func3(){
-    ll n;cin>>n;
-    string s, sub;cin>>s;
-    char cur = 'a';
-    ll cnt = 0, cost, pos=0;
-    for(ll i=n-1;i>=0;i--)
-        if(s[i]>=cur) cnt++, sub+=s[i], cur = s[i], s[i]='#';
-
-        cost = cnt - count(sub.begin(),sub.end(),sub.back());
-        // cout<<sub.back()<<" "<<count(sub.begin(),sub.end(),sub.back())<<endl;
-    
-    // cout<<s<<endl;
+void func2(){
+    string s;cin>>s;
+    int n = s.size();
+    vector<int> cnt(2,0);
+    for(int i=0;i<n;i++) cnt[s[i]-'0']++;
 
     for(int i=0;i<n;i++){
-        if(s[i]=='#') s[i] = sub[pos++];
+        int req = (s[i]-'0')^1;
+        if(cnt[req] == 0){
+            cout<<n-i<<endl;
+            return;
+        }
+        cnt[req]--;
     }
-
-    cout<<(is_sorted(s.begin(),s.end()) ? cost : -1 )<<'\n';
-
+    cout<<0<<endl;
+}
+void func3(){
+    int m;cin>>m;
+    vector<int> cnt(29,0);
+    while(m--){
+        int a,b;cin>>a>>b;
+    
+    if(a==1){
+        cnt[b]++;
+    }
+    else{
+        for(int i=29;i>=0;i--){
+            int mn = min(cnt[i],b>>i);
+            b -= mn* (1<<i);
+        }
+        if(b == 0) cout<<"YES"<<endl;
+        else cout<<"NO"<<endl;
+    }
+    }
 }
 int main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    int t;cin>>t;
-    while(t--){
-        func3();
-    }
+    // int t;cin>>t;
+    // while(t--){
+    //     // func1();
+    //     // func2();
+        
+    // }
+    func3();
     return 0;
 }

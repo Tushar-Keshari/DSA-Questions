@@ -127,55 +127,30 @@ void printBinary(int a){
 }
 
 void func(){
-    ll n,m ;
-    cin>>n>>m;
-    cout<<max(n,m)<<endl;
-}
-void func2(){
-    ll n;cin>>n;
-    map<ll,ll> indegree;
-    for(int i=0;i<n-1;i++){
-        int a,b;
-        cin>>a>>b;
-        indegree[a-1]++;
-        indegree[b-1]++;
-    }
-    ll cnt=0;
+    int n;cin>>n;
+    int key=1,cnt=0;
+    vector<pair<int,int>> v(n);
     for(int i=0;i<n;i++){
-        if(indegree[i]==1){
-            cnt++;
-        }
+        cin>>v[i].first>>v[i].second;
     }
-    cout<<ceil((cnt-1)/2)+1<<endl;
+    while(key<=n){
+        int a = v[key-1].first; //at most ai people in the party are strictly richer than him
+        int b = v[key-1].second;//at most bi people are strictly poorer than him.
+        int rich = n-key;
+        int poor = key-1;
+        if(rich <= a && poor<= b) cnt++;
 
-}
-void func3(){
-    ll n;cin>>n;
-    string s, sub;cin>>s;
-    char cur = 'a';
-    ll cnt = 0, cost, pos=0;
-    for(ll i=n-1;i>=0;i--)
-        if(s[i]>=cur) cnt++, sub+=s[i], cur = s[i], s[i]='#';
-
-        cost = cnt - count(sub.begin(),sub.end(),sub.back());
-        // cout<<sub.back()<<" "<<count(sub.begin(),sub.end(),sub.back())<<endl;
-    
-    // cout<<s<<endl;
-
-    for(int i=0;i<n;i++){
-        if(s[i]=='#') s[i] = sub[pos++];
+        key++;
     }
-
-    cout<<(is_sorted(s.begin(),s.end()) ? cost : -1 )<<'\n';
-
+    cout<<cnt<<endl;
 }
 int main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    int t;cin>>t;
+    int t=1;cin>>t;
     while(t--){
-        func3();
+        func();
     }
     return 0;
 }

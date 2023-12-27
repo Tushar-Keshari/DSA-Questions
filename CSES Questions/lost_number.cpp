@@ -127,55 +127,61 @@ void printBinary(int a){
 }
 
 void func(){
-    ll n,m ;
-    cin>>n>>m;
-    cout<<max(n,m)<<endl;
-}
-void func2(){
-    ll n;cin>>n;
-    map<ll,ll> indegree;
-    for(int i=0;i<n-1;i++){
-        int a,b;
-        cin>>a>>b;
-        indegree[a-1]++;
-        indegree[b-1]++;
-    }
-    ll cnt=0;
-    for(int i=0;i<n;i++){
-        if(indegree[i]==1){
-            cnt++;
+    unordered_map<int,bool> mp;
+    set<int> num = {4,8,15,16,23,42};
+
+    vector<int> v(6,0);
+
+    cout<<"? 1 2"<<endl;
+    int a;cin>>a;
+    cout<<"? 1 3"<<endl;
+    int b;cin>>b;
+    cout<<"? 1 4"<<endl;
+    int c;cin>>c;
+    cout<<"? 1 5"<<endl;
+    int d;cin>>d;
+
+    cout.flush();
+    pair<int,int> p1,p2;
+
+    for(auto it:num){
+        if(a%it == 0 && num.find(a/it)!=num.end()){
+            p1 = make_pair(it,a/it);
+        }
+        if(b%it == 0 && num.find(b/it)!=num.end()){
+            p2 = make_pair(it,b/it);
         }
     }
-    cout<<ceil((cnt-1)/2)+1<<endl;
 
-}
-void func3(){
-    ll n;cin>>n;
-    string s, sub;cin>>s;
-    char cur = 'a';
-    ll cnt = 0, cost, pos=0;
-    for(ll i=n-1;i>=0;i--)
-        if(s[i]>=cur) cnt++, sub+=s[i], cur = s[i], s[i]='#';
+    int common = 0;
+    if(p1.f == p2.f || p1.f == p2.s) common = p1.f;
+    else common = p1.s;
 
-        cost = cnt - count(sub.begin(),sub.end(),sub.back());
-        // cout<<sub.back()<<" "<<count(sub.begin(),sub.end(),sub.back())<<endl;
-    
-    // cout<<s<<endl;
-
-    for(int i=0;i<n;i++){
-        if(s[i]=='#') s[i] = sub[pos++];
+    v[0] = common;
+    v[1] = a/common;
+    v[2] = b/common;
+    v[3] = c/common;
+    v[4] = d/common;
+    for(int i=0;i<=4;i++){
+        if(num.find(v[i])!=num.end()){
+            num.erase(v[i]);
+        }
     }
-
-    cout<<(is_sorted(s.begin(),s.end()) ? cost : -1 )<<'\n';
+    v[5] = *num.begin();
+    cout<<"! ";
+    for(int i=0;i<=5;i++){
+        cout<<v[i]<<" ";
+    }
+    cout.flush();
 
 }
 int main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    int t;cin>>t;
-    while(t--){
-        func3();
-    }
+    // int t=1;cin>>t;
+    // while(t--){
+        func();
+    // }
     return 0;
 }

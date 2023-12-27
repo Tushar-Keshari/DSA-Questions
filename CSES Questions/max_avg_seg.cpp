@@ -127,55 +127,35 @@ void printBinary(int a){
 }
 
 void func(){
-    ll n,m ;
-    cin>>n>>m;
-    cout<<max(n,m)<<endl;
-}
-void func2(){
-    ll n;cin>>n;
-    map<ll,ll> indegree;
-    for(int i=0;i<n-1;i++){
-        int a,b;
-        cin>>a>>b;
-        indegree[a-1]++;
-        indegree[b-1]++;
+    int n,d;
+    cin>>n>>d;
+    vector<int> v(n);
+    rep(i,0,n){
+        cin>>v[i];
     }
-    ll cnt=0;
-    for(int i=0;i<n;i++){
-        if(indegree[i]==1){
-            cnt++;
+    int ans = 0,sum=0;
+    int j=0,i=0;
+    pair<int,int> p;
+    while(j<n){
+        sum += v[j];
+        if(j-i+1 < d){
+            j++;
+        }
+        else{
+            if(sum > ans){
+                ans = sum;
+                p = {i+1,j+1};
+            }
+            sum -= v[i];
+            i++;
         }
     }
-    cout<<ceil((cnt-1)/2)+1<<endl;
-
-}
-void func3(){
-    ll n;cin>>n;
-    string s, sub;cin>>s;
-    char cur = 'a';
-    ll cnt = 0, cost, pos=0;
-    for(ll i=n-1;i>=0;i--)
-        if(s[i]>=cur) cnt++, sub+=s[i], cur = s[i], s[i]='#';
-
-        cost = cnt - count(sub.begin(),sub.end(),sub.back());
-        // cout<<sub.back()<<" "<<count(sub.begin(),sub.end(),sub.back())<<endl;
-    
-    // cout<<s<<endl;
-
-    for(int i=0;i<n;i++){
-        if(s[i]=='#') s[i] = sub[pos++];
-    }
-
-    cout<<(is_sorted(s.begin(),s.end()) ? cost : -1 )<<'\n';
-
+    cout<<p.f<<" "<<p.s<<endl;
 }
 int main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    int t;cin>>t;
-    while(t--){
-        func3();
-    }
+    func();
     return 0;
 }

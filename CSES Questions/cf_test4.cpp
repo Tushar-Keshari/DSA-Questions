@@ -126,56 +126,66 @@ void printBinary(int a){
     cout<<endl;
 }
 
-void func(){
-    ll n,m ;
-    cin>>n>>m;
-    cout<<max(n,m)<<endl;
-}
-void func2(){
+void func1(){
     ll n;cin>>n;
-    map<ll,ll> indegree;
-    for(int i=0;i<n-1;i++){
-        int a,b;
-        cin>>a>>b;
-        indegree[a-1]++;
-        indegree[b-1]++;
-    }
-    ll cnt=0;
-    for(int i=0;i<n;i++){
-        if(indegree[i]==1){
-            cnt++;
+    ll neg=0,zero=0;
+    for(ll i=0;i<n;i++){
+        int k;cin>>k;
+        if(k<0) neg++;
+        if(k==0) {
+            zero++;
+            break;
         }
+    }    
+        if(zero>0){
+            cout<<0;
+        }
+        else{
+            if(neg%2!=0) 
+            cout<<0; 
+            else if(neg%2==0) 
+            cout<<1<<endl<<1<<" "<<0; 
+        }
+        cout<<endl; 
+}
+unordered_map<string, ll> memo;
+
+void unique_string(string s) {
+    if (s.size() == 1) {
+        memo[s]++;
     }
-    cout<<ceil((cnt-1)/2)+1<<endl;
+
+    if (memo.find(s) != memo.end()) {
+        return memo[s].first;
+    }
+
+    string temp1 = s.substr(1, s.size() - 1);
+    string temp = s[0] + s.substr(2, s.size() - 2);
+    unique_string(temp);
+    unique_string(temp1);
 
 }
-void func3(){
-    ll n;cin>>n;
-    string s, sub;cin>>s;
-    char cur = 'a';
-    ll cnt = 0, cost, pos=0;
-    for(ll i=n-1;i>=0;i--)
-        if(s[i]>=cur) cnt++, sub+=s[i], cur = s[i], s[i]='#';
+unordered_map<string,ll>um;
+void func2(){
+    int n; cin>>n;
+    string s;cin>>s;
+    for(ll i=1; i<n; ++i){
+    string s1=s.substr(i,n-1);
+    string s2;s2+=s[i-1];
+    s2+=s.substr(i+1,n-i-1);
 
-        cost = cnt - count(sub.begin(),sub.end(),sub.back());
-        // cout<<sub.back()<<" "<<count(sub.begin(),sub.end(),sub.back())<<endl;
-    
-    // cout<<s<<endl;
-
-    for(int i=0;i<n;i++){
-        if(s[i]=='#') s[i] = sub[pos++];
+    um[s1]++;
+    um[s2]++;
     }
-
-    cout<<(is_sorted(s.begin(),s.end()) ? cost : -1 )<<'\n';
-
+    cout<<um.size()+1<<endl;
 }
 int main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    int t;cin>>t;
+    int t=1;cin>>t;
     while(t--){
-        func3();
+        func2();
     }
     return 0;
 }
